@@ -1,0 +1,25 @@
+name: QuestsForCash
+version: '${project.version}'
+main: eelfloat.questsforcash.QuestsForCash
+api-version: 1.18
+authors: [ eelfloat ]
+depend: [ Vault ]
+description: Call 1-800-QUESTS-FOR-CASH now, that's 1-800-QUESTS-FOR-CASH.
+
+commands:
+  quests:
+    description: Lists quests
+    usage: /quests
+    permission: questforcash.doquests
+  resetquests:
+    description: Regenerates quests for the given player, or all players if not specified
+    usage: /resetquests [player]
+    permission: questforcash.admin
+  submitquest:
+    description: Submits items to fulfill a quest
+    usage: /submitquest <quest>
+    permission: questforcash.doquests
+
+permissions:
+  questforcash.doquests: { default: true, description: "Allows questing" }
+  questforcash.admin: { default: op, description: "Admin permissions for managing quests" }

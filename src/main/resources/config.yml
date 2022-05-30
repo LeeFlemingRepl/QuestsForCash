@@ -1,0 +1,37 @@
+# How many random quests are assigned at one time, including completed quests.
+# Each player gets their own set of random quests.
+max_random_quests: 2
+# How many shared quests are assigned at one time, including completed quests.
+# Shared quests are the same for all players.
+max_shared_quests: 1
+
+# The pool of quests that can be assigned to users
+quests:
+  - # The ID of the quest, used for commands such as `/submit <id>`. Keep it easy to type and don't use spaces.
+    id: diamonds
+    # The title of the quest, cosmetic only.
+    title: Mine Diamonds
+    # What type of quest. Currently only supports `Fetch`
+    type: Fetch
+
+    # The chance for this quest to occur as a 'streak' quest, where each day the
+    # item requirements and payout increases by the streak multiplier
+    # Range: 0-1
+    streakChance: 0.5
+    # How much the streak increases per day (exponential)
+    streakMultiplier: 1.10
+    # The maximum multiplier the streak can reach
+    streakMultiplierCap: 10
+
+    # For fetch quests, what item to fetch
+    material: DIAMOND
+    # For fetch quests, how many of that item to fetch
+    quantity: 1
+    # The reward for completing the quest
+    reward: 1000
+    # The weight determining how often this quest is randomly assigned (for random model)
+    # Set to 0 to never assign this quest randomly. (e.g. event only quests)
+    randomWeight: 1
+    # How many seconds it takes for the test to expire
+    # If this is 0, the quest won't expire. USE SPARINGLY, 0 EXPIRY QUESTS CAN ONLY BE CLEARED BY COMMANDS.
+    expires: 86400
