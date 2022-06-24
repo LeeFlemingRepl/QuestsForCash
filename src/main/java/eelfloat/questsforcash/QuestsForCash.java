@@ -141,12 +141,17 @@ public final class QuestsForCash extends JavaPlugin implements Listener {
                 }
                 if (quest.expired()) {
                     if (quest.complete && quest.kind == Quest.QuestKind.STREAK) {
-                        // If a streak quest is complete, renew it
-                        player.sendMessage("[QuestsForCash] Quest \"" + quest.questData.title + "\" renewed!");
-                        quest.created = System.currentTimeMillis();
-                        quest.complete = false;
-                        quest.streak += 1;
-                        return false;
+                        if (quest.streakExpired()) {
+                            player.sendMessage("[QuestsForCash] Streak quest \"" + quest.questData.title + "\" expired.");
+                            return true;
+                        } else {
+                            // If a streak quest is complete, renew it
+                            player.sendMessage("[QuestsForCash] Quest \"" + quest.questData.title + "\" renewed!");
+                            quest.created = System.currentTimeMillis();
+                            quest.complete = false;
+                            quest.streak += 1;
+                            return false;
+                        }
                     } else {
                         // Otherwise remove regular expired quests
                         player.sendMessage("[QuestsForCash] Quest \"" + quest.questData.title + "\" expired.");

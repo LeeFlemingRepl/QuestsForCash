@@ -49,6 +49,22 @@ public class Quest implements ConfigurationSerializable {
         this.streak = 0;
     }
 
+    /**
+     * Checks if the quest is more than 2x over its expiry time and valid to break a streak
+     * (Quests don't refresh until actually hitting the expire threshold, and don't renew
+     * until also hitting that threshold, so *completed* streaking quests can't be safely
+     * expired until 2x the base time has passed)
+     * @return if the quest has been expired for long enough to break a streak
+     */
+    public boolean streakExpired() {
+        if (this.questData.expires == 0) return false;
+        return System.currentTimeMillis() > created + (questData.expires * 2L) * 1000L;
+    }
+
+    /**
+     * Checks if a quest is over its expiry time and has expired
+     * @return if the quest has expired
+     */
     public boolean expired() {
         if (this.questData.expires == 0) return false;
         return System.currentTimeMillis() > created + questData.expires * 1000L;
@@ -67,7 +83,7 @@ public class Quest implements ConfigurationSerializable {
 
     /** @return the cash value reward for this quest */
     public double reward() {
-        return this.questData.reward * this.multiplier();
+        return Math.floor(this.questData.reward * this.multiplier());
     }
 
     /** Creates an uncompleted copy of this test */
